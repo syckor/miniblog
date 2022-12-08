@@ -22,19 +22,19 @@ public class BlogController {
 
     //글쓰기
     @PostMapping("/blog")
-    public ResponseEntity<BlogResponseContentDto> write(@RequestBody BlogRequestDto blogRequestDto, HttpServletRequest request){
+    public ResponseEntity<ResponseDto> write(@RequestBody BlogRequestDto blogRequestDto, HttpServletRequest request){
         return blogService.createBlog(blogRequestDto, request);
     }
 
     //게시글 하나 조회
     @GetMapping("/blog/{id}")
-    public ResponseEntity<BlogResponseContentDto> read(@PathVariable Long id){
+    public ResponseEntity<ResponseDto> read(@PathVariable Long id){
         return blogService.getBlog(id);
     }
 
     //게시글 수정하기
     @PutMapping("/blog/{id}")
-    public ResponseEntity<BlogResponseContentDto> updateBlog(@PathVariable Long id
+    public ResponseEntity<ResponseDto> updateBlog(@PathVariable Long id
                                                             , @RequestBody BlogRequestDto blogRequestDto
                                                             , HttpServletRequest request){
         return blogService.update(id, blogRequestDto, request);
@@ -43,14 +43,14 @@ public class BlogController {
 
     //게시글 삭제하기
     @DeleteMapping("/blog/{id}")
-    public ResponseEntity<BlogResponseContentDto> deleteBlog(@PathVariable Long id
+    public ResponseEntity<ResponseDto> deleteBlog(@PathVariable Long id
                                                             , HttpServletRequest request){
         return blogService.deleteBlog(id, request);
     }
 
     //전체 리스트 조회
     @GetMapping("/blog")
-    public ResponseEntity<BlogResponseListDto> getTest(){
+    public ResponseEntity<ResponseDto> getTest(){
         return blogService.getBlogs();
     }
 

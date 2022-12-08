@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -22,23 +24,23 @@ public class Blog extends TimeStamped{
 
     @Column(nullable = false)
     private String content;
-/*
-    @Column(nullable = false)
-    private String username;
-*/
-    /*
-        연관관계의 주인은 mappedby 를 사용하지 않는다.
-        연관관계의 주인은 외래키가 있는 쪽이 주인이 된다.
-    */
+
     @ManyToOne
     @JoinColumn(name = "USER_USERNAME", nullable = false)
     private User user;
+
+
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
+    @OrderBy("modifiedAt desc")
+    private List<Reply> replies;
+
 
     public Blog(BlogRequestDto blogRequestDto, User user){
 
         this.title = blogRequestDto.getTitle();
         this.content = blogRequestDto.getContent();
         this.user = user;
+        this.replies = new ArrayList<>();
     }
 
     public void update(BlogRequestDto blogRequestDto) {
